@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.GymTrackerBackend.dto.UserLoginRequestDTO;
+import com.GymTrackerBackend.dto.UserLoginResponseDTO;
 import com.GymTrackerBackend.dto.UserRegisterRequestDTO;
 import com.GymTrackerBackend.dto.UserRegisterResponseDTO;
 import com.GymTrackerBackend.exception.BadRequest;
@@ -47,6 +48,19 @@ public class UserController {
 	        }
 	        return ResponseEntity.ok(userRegisterResponseDTO);
 	 	}
-	 
+	 @PostMapping("/auth/login")
+	    public ResponseEntity<?> userLogin(
+	            @Valid @RequestBody UserLoginRequestDTO userLoginRequestDTO,
+	            BindingResult bindingResult) throws Exception {
+
+	        if (bindingResult.hasErrors()) {
+	            throw new Exception();
+	        }
+
+	        UserLoginResponseDTO userLoginResponseDTO =
+	                userService.getToken(userLoginRequestDTO, authenticationManager, jwtUtil);
+
+	        return ResponseEntity.ok(userLoginResponseDTO);
+	    }
 	
 }

@@ -1,11 +1,16 @@
 package com.GymTrackerBackend.service;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.GymTrackerBackend.dto.UserLoginRequestDTO;
+import com.GymTrackerBackend.dto.UserLoginResponseDTO;
 import com.GymTrackerBackend.dto.UserRegisterRequestDTO;
 import com.GymTrackerBackend.dto.UserRegisterResponseDTO;
 import com.GymTrackerBackend.exception.BadRequest;
@@ -13,6 +18,7 @@ import com.GymTrackerBackend.exception.Conflict;
 import com.GymTrackerBackend.model.User;
 import com.GymTrackerBackend.model.VerificationToken;
 import com.GymTrackerBackend.repository.UserRepository;
+import com.GymTrackerBackend.security.JwtUtil;
 
 import jakarta.validation.Valid;
 
@@ -80,6 +86,18 @@ public class UserService implements UserDetailsService{
 		UserRegisterResponseDTO userRegisterResponseDTO = new UserRegisterResponseDTO(userResponse.getId(),
 				userResponse.getUsername(), userResponse.getEmail(), userResponse.getRole());
 		return userRegisterResponseDTO;
+	}
+
+	public UserLoginResponseDTO getToken(@Valid UserLoginRequestDTO userLoginRequestDTO,
+			AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+		Authentication authentication;
+		authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginRequestDTO.getUsername(), userLoginRequestDTO.getPassword()));
+		
+		User user = (User)authentication.getPrincipal();
+		String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
+		UserLoginResponseDTO userLoginResponseDTO = new UserLoginResponseDTO(token);
+		
+		return userLoginResponseDTO;
 	}
 	
 }

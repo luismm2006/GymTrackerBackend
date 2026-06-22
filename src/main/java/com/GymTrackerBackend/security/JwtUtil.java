@@ -21,11 +21,10 @@ public class JwtUtil {
     }
 
     // Generar token
-    public String generateToken(String username, String role, Integer points) {
+    public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role)
-                .claim("points", points)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
