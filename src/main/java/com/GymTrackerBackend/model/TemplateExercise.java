@@ -2,11 +2,14 @@ package com.GymTrackerBackend.model;
 
 import java.util.Objects;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,14 +20,16 @@ public class TemplateExercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "template_id", nullable = false)
-    private Integer templateId;
-
-    @Column(name = "exercise_id", nullable = false)
-    private Integer exerciseId;
-
     @Column(name = "order_index", nullable = false)
     private Integer orderIndex;
+    
+    @ManyToOne
+    @JoinColumn(name = "template_id", nullable = false)
+    private Template template;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
 
 	public Integer getId() {
 		return id;
@@ -34,28 +39,28 @@ public class TemplateExercise {
 		this.id = id;
 	}
 
-	public Integer getTemplateId() {
-		return templateId;
-	}
-
-	public void setTemplateId(Integer templateId) {
-		this.templateId = templateId;
-	}
-
-	public Integer getExerciseId() {
-		return exerciseId;
-	}
-
-	public void setExerciseId(Integer exerciseId) {
-		this.exerciseId = exerciseId;
-	}
-
 	public Integer getOrderIndex() {
 		return orderIndex;
 	}
 
 	public void setOrderIndex(Integer orderIndex) {
 		this.orderIndex = orderIndex;
+	}
+
+	public Template getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Template template) {
+		this.template = template;
+	}
+
+	public Exercise getExercise() {
+		return exercise;
+	}
+
+	public void setExercise(Exercise exercise) {
+		this.exercise = exercise;
 	}
 
 	@Override
@@ -74,6 +79,7 @@ public class TemplateExercise {
 		TemplateExercise other = (TemplateExercise) obj;
 		return Objects.equals(id, other.id);
 	}
-    
+
+	
     
 }

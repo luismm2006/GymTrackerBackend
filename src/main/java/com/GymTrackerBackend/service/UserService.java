@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User result = userRepository.findByusername(username);
+		User result = userRepository.findByUsername(username);
 		if (result == null) {
 			throw new UsernameNotFoundException("Credenciales incorrectas");
 		}
@@ -56,7 +56,7 @@ public class UserService implements UserDetailsService{
 			throw new BadRequest("Las contraseñas no coinciden");
 		}
 		
-		User userExist = this.userRepository.findByusername(userRegisterRequestDTO.getUsername());
+		User userExist = this.userRepository.findByUsername(userRegisterRequestDTO.getUsername());
 		
 		if(userExist != null) {
 			throw new Conflict("Usuario existente");

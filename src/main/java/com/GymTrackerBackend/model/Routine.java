@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -21,33 +23,29 @@ public class Routine {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "user_id")
-	private Integer userId;
-	
 	@Column(name = "routine_date")
 	private Date routineDate;
 	
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	@OneToMany(mappedBy = "routineId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "routine", cascade = CascadeType.ALL)
 	private List<Series> series;
 
-	
+	@ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "template_id", nullable = false)
+    private Template template;
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public Date getRoutineDate() {
@@ -66,6 +64,30 @@ public class Routine {
 		this.createdAt = createdAt;
 	}
 
+	public List<Series> getSeries() {
+		return series;
+	}
+
+	public void setSeries(List<Series> series) {
+		this.series = series;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Template getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(Template template) {
+		this.template = template;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -82,6 +104,7 @@ public class Routine {
 		Routine other = (Routine) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 	
 	
 }

@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,12 +20,6 @@ public class Series {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "routine_id")
-	private Integer routineId;
-	
-	@Column(name = "exercise_id")
-	private Integer exerciseId;
-	
 	@Column(name = "weight")
 	private Double weight;
 	
@@ -33,28 +29,20 @@ public class Series {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
+	@ManyToOne
+    @JoinColumn(name = "routine_id", nullable = false)
+    private Routine routine;
+
+    @ManyToOne
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getRoutineId() {
-		return routineId;
-	}
-
-	public void setRoutineId(Integer routineId) {
-		this.routineId = routineId;
-	}
-
-	public Integer getExerciseId() {
-		return exerciseId;
-	}
-
-	public void setExerciseId(Integer exerciseId) {
-		this.exerciseId = exerciseId;
 	}
 
 	public Double getWeight() {
@@ -81,6 +69,22 @@ public class Series {
 		this.createdAt = createdAt;
 	}
 
+	public Routine getRoutine() {
+		return routine;
+	}
+
+	public void setRoutine(Routine routine) {
+		this.routine = routine;
+	}
+
+	public Exercise getExercise() {
+		return exercise;
+	}
+
+	public void setExercise(Exercise exercise) {
+		this.exercise = exercise;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -98,5 +102,5 @@ public class Series {
 		return Objects.equals(id, other.id);
 	}
 	
-	
+    
 }

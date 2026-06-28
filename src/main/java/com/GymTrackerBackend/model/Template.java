@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -21,19 +23,31 @@ public class Template {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "user_id")
-	private Integer userId;
-	
 	@Column(name = "name")
 	private String name;
 	
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	@OneToMany(mappedBy = "templateId")
-	private List<TemplateExercise> exercises;
+	@ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-	
+    @OneToMany(mappedBy = "template")
+    private List<TemplateExercise> templateExercises;
+
+    @OneToMany(mappedBy = "template")
+    private List<Routine> routines;
+
+    @OneToMany(mappedBy = "template")
+    private List<LibraryTemplate> libraryTemplates;
+
+    
+    
+	public Template() {
+		super();
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -42,13 +56,6 @@ public class Template {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
 
 	public String getName() {
 		return name;
@@ -64,6 +71,38 @@ public class Template {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<TemplateExercise> getTemplateExercises() {
+		return templateExercises;
+	}
+
+	public void setTemplateExercises(List<TemplateExercise> templateExercises) {
+		this.templateExercises = templateExercises;
+	}
+
+	public List<Routine> getRoutines() {
+		return routines;
+	}
+
+	public void setRoutines(List<Routine> routines) {
+		this.routines = routines;
+	}
+
+	public List<LibraryTemplate> getLibraryTemplates() {
+		return libraryTemplates;
+	}
+
+	public void setLibraryTemplates(List<LibraryTemplate> libraryTemplates) {
+		this.libraryTemplates = libraryTemplates;
 	}
 
 	@Override
@@ -82,6 +121,9 @@ public class Template {
 		Template other = (Template) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
+	
 	
 	
 }

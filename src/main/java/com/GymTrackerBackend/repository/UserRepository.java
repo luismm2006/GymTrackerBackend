@@ -6,8 +6,9 @@ import com.GymTrackerBackend.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	User findByusername(String username);
-
 	User findByEmail(String email);
+
+	User findByUsername(String username);
+
 	
 }

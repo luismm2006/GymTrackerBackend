@@ -37,11 +37,14 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private List<Routine> routines;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private List<Template> templates;
+
+    @OneToMany(mappedBy = "user")
+    private List<LibraryTemplate> libraryTemplates;
     
     public User(String username, String email, String password, String role) {
 		super();
@@ -51,8 +54,10 @@ public class User implements UserDetails {
 		this.role = role;
 	    this.enabled = false; 
 		this.createdAt = LocalDateTime.now();
-		this.routines = new ArrayList<>();;
-		this.templates = new ArrayList<>();;
+		this.routines = new ArrayList<>();
+		this.templates = new ArrayList<>();
+		this.libraryTemplates = new ArrayList<>();;
+
 	}
 
 	public User() {
@@ -115,6 +120,39 @@ public class User implements UserDetails {
     
     public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+    
+	public List<Routine> getRoutines() {
+		return routines;
+	}
+
+	public void setRoutines(List<Routine> routines) {
+		this.routines = routines;
+	}
+
+	public List<Template> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<Template> templates) {
+		this.templates = templates;
+	}
+
+	public List<LibraryTemplate> getLibraryTemplates() {
+		return libraryTemplates;
+	}
+
+	public void setLibraryTemplates(List<LibraryTemplate> libraryTemplates) {
+		this.libraryTemplates = libraryTemplates;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	@Override

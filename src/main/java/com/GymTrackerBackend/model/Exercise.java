@@ -1,5 +1,6 @@
 package com.GymTrackerBackend.model;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +30,12 @@ public class Exercise {
 	@Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 	
+	@OneToMany(mappedBy = "exercise")
+    private List<Series> series;
+
+    @OneToMany(mappedBy = "exercise")
+    private List<TemplateExercise> templateExercises;
+
 	public Integer getId() {
 		return id;
 	}
@@ -61,9 +69,29 @@ public class Exercise {
 	}
 
 	public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-	
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public List<Series> getSeries() {
+		return series;
+	}
+
+	public void setSeries(List<Series> series) {
+		this.series = series;
+	}
+
+	public List<TemplateExercise> getTemplateExercises() {
+		return templateExercises;
+	}
+
+	public void setTemplateExercises(List<TemplateExercise> templateExercises) {
+		this.templateExercises = templateExercises;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -80,6 +108,7 @@ public class Exercise {
 		Exercise other = (Exercise) obj;
 		return Objects.equals(id, other.id);
 	}
+    
 	
 	
 	
