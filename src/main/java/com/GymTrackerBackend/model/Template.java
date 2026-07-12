@@ -39,10 +39,6 @@ public class Template {
     @OneToMany(mappedBy = "template")
     private List<Routine> routines;
 
-    @OneToMany(mappedBy = "template")
-    private List<LibraryTemplate> libraryTemplates;
-
-    
     
 	public Template() {
 		super();
@@ -97,13 +93,6 @@ public class Template {
 		this.routines = routines;
 	}
 
-	public List<LibraryTemplate> getLibraryTemplates() {
-		return libraryTemplates;
-	}
-
-	public void setLibraryTemplates(List<LibraryTemplate> libraryTemplates) {
-		this.libraryTemplates = libraryTemplates;
-	}
 
 	@Override
 	public int hashCode() {

@@ -6,4 +6,6 @@ import com.GymTrackerBackend.model.TemplateExercise;
 
 public interface TemplateExerciseRepository extends JpaRepository<TemplateExercise, Integer> {
 
+	int countByTemplateId(Integer templateId);
+
 }

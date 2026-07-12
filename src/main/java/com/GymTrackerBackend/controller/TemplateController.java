@@ -1,13 +1,17 @@
 package com.GymTrackerBackend.controller;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.GymTrackerBackend.dto.TemplateExercisesRequestDTO;
 import com.GymTrackerBackend.dto.TemplateRequestDTO;
 import com.GymTrackerBackend.dto.TemplateResponseDTO;
 import com.GymTrackerBackend.service.TemplateService;
@@ -23,12 +27,20 @@ public class TemplateController {
 		this.templateService = templateService;
 	}
 	
-	
-	@PostMapping("/createTemplate")
-	public ResponseEntity<?> createTemplate(@RequestBody TemplateRequestDTO dto){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		TemplateResponseDTO templateResponseDTO = templateService.createTemplate(dto, auth);
-        return ResponseEntity.ok(templateResponseDTO);
-	}
-	
+	@PostMapping
+    public ResponseEntity<?> createTemplate(@RequestBody TemplateRequestDTO dto, Authentication auth) {
+        TemplateResponseDTO response = templateService.createTemplate(dto, auth);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{templateId}/exercises")
+    public ResponseEntity<?> addExercise(
+            @PathVariable Integer templateId,
+            @RequestBody TemplateExercisesRequestDTO dto
+    ) {
+        templateService.addExercise(templateId, dto.getExerciseId());
+        return ResponseEntity.ok(
+                Map.of("message", "Ejercicio añadido correctamente")
+            );
+    }
 }

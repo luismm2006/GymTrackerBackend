@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.GymTrackerBackend.dto.TemplateRequestDTO;
 import com.GymTrackerBackend.dto.TemplateResponseDTO;
+import com.GymTrackerBackend.exception.NotFound;
 import com.GymTrackerBackend.model.Exercise;
 import com.GymTrackerBackend.model.Template;
 import com.GymTrackerBackend.model.TemplateExercise;
@@ -41,63 +42,48 @@ public class TemplateService {
 	public TemplateResponseDTO createTemplate(TemplateRequestDTO dto, Authentication auth) {
 		
 		User loggedUser = userRepository.findByUsername(auth.getName());
-		
-		if(loggedUser.getRole().equals("ADMIN")) {
-			dto.setUserId(null);
-		}else {
-			dto.setUserId(loggedUser.getId());
-		}
-		
-		Template template = new Template();
-		template.setName(dto.getName());
-		template.setCreatedAt(LocalDateTime.now());
-		if (dto.getUserId() == null) {
-		    template.setUser(null); 
-		} else {
-		    template.setUser(loggedUser); 
-		}
-				
-		templateRepository.save(template);
-		
-		List<TemplateExercise> templateExercises = createTemplateExercises(template.getId(), dto.getExerciseIds());
-		
-		template.setTemplateExercises(templateExercises);
-		
-		templateRepository.save(template);
-		
-		TemplateResponseDTO templateResponseDTO = new TemplateResponseDTO();
-		templateResponseDTO.setId(template.getId());
-		templateResponseDTO.setName(template.getName());
-		templateResponseDTO.setOfficial(dto.getUserId() == null ? true : false);
-		templateResponseDTO.setExerciseIds(dto.getExerciseIds());
-		templateResponseDTO.setCreatedAt(template.getCreatedAt());
-		
-		return templateResponseDTO;
+
+	    Template template = new Template();
+	    template.setName(dto.getName());
+	    template.setCreatedAt(LocalDateTime.now());
+
+	    if (loggedUser.getRole().equals("ADMIN")) {
+	        template.setUser(null);
+	    } else {
+	        template.setUser(loggedUser);
+	    }
+
+	    templateRepository.save(template);
+
+	    return new TemplateResponseDTO(
+	            template.getId(),
+	            template.getName(),
+	            template.getUser() == null, 
+	            template.getCreatedAt(),
+	            List.of()           
+	    );
 	}
 	
-	public List<TemplateExercise> createTemplateExercises(Integer templateId, List<Integer> exercisesId){
+
+	public TemplateExercise addExercise(Integer templateId, Integer exerciseId) {
+		
 		Template template = templateRepository.findById(templateId).orElse(null);
 		if(template == null) {
-			//fallo
+			throw new NotFound("No existe esa plantilla");
 		}
-		List<TemplateExercise> result = new ArrayList<>();
+		
+		Exercise exercise = exerciseRepository.findById(exerciseId).orElse(null);
+		if(exercise == null) {
+			throw new NotFound("No existe ese ejercicio");
+		}
+		
+		int order = templateExerciseRepository.countByTemplateId(templateId);
 
-	    int order = 0;
-		for(Integer exerciseId : exercisesId) {
-			Exercise exercise = exerciseRepository.findById(exerciseId).orElse(null);
-			if(exercise == null) {
-				//fallo
-			}
-			TemplateExercise templateExercise = new TemplateExercise();
-			templateExercise.setTemplate(template);
-			templateExercise.setExercise(exercise);
-			templateExercise.setOrderIndex(order++);
-			
-			templateExerciseRepository.save(templateExercise);
-			result.add(templateExercise);
-		}
-		
-		return result;
-		
+	    TemplateExercise te = new TemplateExercise();
+	    te.setTemplate(template);
+	    te.setExercise(exercise);
+	    te.setOrderIndex(order);
+
+	    return templateExerciseRepository.save(te);
 	}
 }
