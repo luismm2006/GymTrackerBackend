@@ -1,5 +1,6 @@
 package com.GymTrackerBackend.model;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,6 +33,10 @@ public class TemplateExercise {
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
 
+	@OneToMany(mappedBy = "templateExercise")
+    private List<Series> series;
+
+    
 	public Integer getId() {
 		return id;
 	}
@@ -61,6 +67,16 @@ public class TemplateExercise {
 
 	public void setExercise(Exercise exercise) {
 		this.exercise = exercise;
+	}
+
+	
+	
+	public List<Series> getSeries() {
+		return series;
+	}
+
+	public void setSeries(List<Series> series) {
+		this.series = series;
 	}
 
 	@Override

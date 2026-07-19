@@ -5,21 +5,18 @@ import java.util.List;
 
 public class TemplateResponseDTO {
 
-    private Integer id;
+	private Integer id;
     private String name;
-    private boolean official; 
+    private boolean official;
     private LocalDateTime createdAt;
+    private List<ExercisesInTemplateDTO> exercises;
 
-    private List<Integer> exerciseIds;
-
-    public TemplateResponseDTO() {}
-
-    public TemplateResponseDTO(Integer id, String name, boolean official, LocalDateTime createdAt, List<Integer> exerciseIds) {
+    public TemplateResponseDTO(Integer id, String name, boolean official, LocalDateTime createdAt, List<ExercisesInTemplateDTO> exercises) {
         this.id = id;
         this.name = name;
         this.official = official;
         this.createdAt = createdAt;
-        this.exerciseIds = exerciseIds;
+        this.exercises = exercises;
     }
 
     public Integer getId() {
@@ -54,11 +51,11 @@ public class TemplateResponseDTO {
         this.createdAt = createdAt;
     }
 
-    public List<Integer> getExerciseIds() {
-        return exerciseIds;
+    public List<ExercisesInTemplateDTO> getExercises() {
+        return exercises;
     }
 
-    public void setExerciseIds(List<Integer> exerciseIds) {
-        this.exerciseIds = exerciseIds;
+    public void setExercises(List<ExercisesInTemplateDTO> exercises) {
+        this.exercises = exercises;
     }
 }

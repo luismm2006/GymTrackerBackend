@@ -29,9 +29,6 @@ public class Routine {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	@OneToMany(mappedBy = "routine", cascade = CascadeType.ALL)
-	private List<Series> series;
-
 	@ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -62,14 +59,6 @@ public class Routine {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
-	}
-
-	public List<Series> getSeries() {
-		return series;
-	}
-
-	public void setSeries(List<Series> series) {
-		this.series = series;
 	}
 
 	public User getUser() {

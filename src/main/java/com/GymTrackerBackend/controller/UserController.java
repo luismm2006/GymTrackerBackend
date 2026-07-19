@@ -2,12 +2,15 @@ package com.GymTrackerBackend.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.GymTrackerBackend.dto.GetTemplatesResponseDto;
 import com.GymTrackerBackend.dto.UserLoginRequestDTO;
 import com.GymTrackerBackend.dto.UserLoginResponseDTO;
 import com.GymTrackerBackend.dto.UserRegisterRequestDTO;
@@ -34,6 +37,13 @@ public class UserController {
 		this.jwtUtil = jwtUtil;
 		this.authenticationManager = authenticationManager; 
 	}
+	
+	@GetMapping("/templates")
+	public ResponseEntity<?> getAllTemplatesByUserId(Authentication auth){
+		GetTemplatesResponseDto getTemplatesResponseDto = userService.getAllTemplatesByUserId(auth);
+		return ResponseEntity.ok(getTemplatesResponseDto);
+	}
+	
 
 	 @PostMapping("/auth/register")
 	    public ResponseEntity<?> userRegister(

@@ -43,8 +43,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Template> templates;
 
-    @OneToMany(mappedBy = "user")
-    private List<LibraryTemplate> libraryTemplates;
     
     public User(String username, String email, String password, String role) {
 		super();
@@ -56,7 +54,6 @@ public class User implements UserDetails {
 		this.createdAt = LocalDateTime.now();
 		this.routines = new ArrayList<>();
 		this.templates = new ArrayList<>();
-		this.libraryTemplates = new ArrayList<>();;
 
 	}
 
@@ -139,13 +136,7 @@ public class User implements UserDetails {
 		this.templates = templates;
 	}
 
-	public List<LibraryTemplate> getLibraryTemplates() {
-		return libraryTemplates;
-	}
 
-	public void setLibraryTemplates(List<LibraryTemplate> libraryTemplates) {
-		this.libraryTemplates = libraryTemplates;
-	}
 
 	public void setUsername(String username) {
 		this.username = username;

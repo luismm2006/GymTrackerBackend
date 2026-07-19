@@ -2,7 +2,7 @@ package com.GymTrackerBackend.service;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -86,4 +86,6 @@ public class TemplateService {
 
 	    return templateExerciseRepository.save(te);
 	}
+
+	
 }

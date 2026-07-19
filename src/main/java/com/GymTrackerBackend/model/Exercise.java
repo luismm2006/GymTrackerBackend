@@ -29,9 +29,6 @@ public class Exercise {
 
 	@Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
-	
-	@OneToMany(mappedBy = "exercise")
-    private List<Series> series;
 
     @OneToMany(mappedBy = "exercise")
     private List<TemplateExercise> templateExercises;
@@ -76,13 +73,7 @@ public class Exercise {
 		this.createdAt = createdAt;
 	}
 
-	public List<Series> getSeries() {
-		return series;
-	}
 
-	public void setSeries(List<Series> series) {
-		this.series = series;
-	}
 
 	public List<TemplateExercise> getTemplateExercises() {
 		return templateExercises;

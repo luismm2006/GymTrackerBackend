@@ -29,13 +29,9 @@ public class Series {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	@ManyToOne
-    @JoinColumn(name = "routine_id", nullable = false)
-    private Routine routine;
-
     @ManyToOne
-    @JoinColumn(name = "exercise_id", nullable = false)
-    private Exercise exercise;
+    @JoinColumn(name = "template_exercise_id", nullable = false)
+    private TemplateExercise templateExercise;
 
 	public Integer getId() {
 		return id;
@@ -69,20 +65,12 @@ public class Series {
 		this.createdAt = createdAt;
 	}
 
-	public Routine getRoutine() {
-		return routine;
+	public TemplateExercise getTemplateExercise() {
+		return templateExercise;
 	}
 
-	public void setRoutine(Routine routine) {
-		this.routine = routine;
-	}
-
-	public Exercise getExercise() {
-		return exercise;
-	}
-
-	public void setExercise(Exercise exercise) {
-		this.exercise = exercise;
+	public void setTemplateExercise(TemplateExercise templateExercise) {
+		this.templateExercise = templateExercise;
 	}
 
 	@Override

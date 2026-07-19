@@ -26,4 +26,6 @@ public class ExerciseController {
 	public ResponseEntity<?> getAllExercises(String search, String muscleGroup){
 		return ResponseEntity.ok(exerciseService.getAllExercises(search, muscleGroup));
 	}
+	
+	
 }

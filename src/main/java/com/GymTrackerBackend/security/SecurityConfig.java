@@ -74,12 +74,19 @@ public class SecurityConfig {
 	    .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
          
-            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-            .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/verify", "/api/exercises", "/api/createTemplate").permitAll()
-            .requestMatchers("/swagger-ui/**").permitAll()
-            .requestMatchers("/v3/api-docs/**").permitAll()
-            .anyRequest().denyAll()
-            
+        		// Swagger
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                // Auth
+                .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/verify").permitAll()
+                // Ejercicios públicos
+                .requestMatchers("/api/exercises").permitAll()
+                // Crear plantilla (solo si quieres que ADMIN pueda sin token)
+                .requestMatchers("/api/createTemplate").permitAll()
+                // Endpoints que requieren autenticación
+                .requestMatchers("/api/templates/**").authenticated()
+                .requestMatchers("/api/**").authenticated()
+                // Todo lo demás denegado
+                .anyRequest().denyAll()
 
         )
         .exceptionHandling(ex -> ex
