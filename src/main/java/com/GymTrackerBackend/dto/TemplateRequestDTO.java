@@ -1,6 +1,5 @@
 package com.GymTrackerBackend.dto;
 
-import java.util.List;
 
 public class TemplateRequestDTO {
 

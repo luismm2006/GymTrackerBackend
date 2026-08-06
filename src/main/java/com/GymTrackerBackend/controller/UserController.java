@@ -1,5 +1,7 @@
 package com.GymTrackerBackend.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.GymTrackerBackend.dto.GetTemplatesResponseDto;
+import com.GymTrackerBackend.dto.TemplateListDTO;
 import com.GymTrackerBackend.dto.UserLoginRequestDTO;
 import com.GymTrackerBackend.dto.UserLoginResponseDTO;
 import com.GymTrackerBackend.dto.UserRegisterRequestDTO;
@@ -40,8 +43,8 @@ public class UserController {
 	
 	@GetMapping("/templates")
 	public ResponseEntity<?> getAllTemplatesByUserId(Authentication auth){
-		GetTemplatesResponseDto getTemplatesResponseDto = userService.getAllTemplatesByUserId(auth);
-		return ResponseEntity.ok(getTemplatesResponseDto);
+		List<TemplateListDTO> templateListDTO = userService.getAllTemplatesByUserId(auth);
+		return ResponseEntity.ok(templateListDTO);
 	}
 	
 

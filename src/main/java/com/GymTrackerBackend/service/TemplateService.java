@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.GymTrackerBackend.dto.ExercisesInTemplateDTO;
+import com.GymTrackerBackend.dto.SeriesDTO;
 import com.GymTrackerBackend.dto.TemplateRequestDTO;
 import com.GymTrackerBackend.dto.TemplateResponseDTO;
 import com.GymTrackerBackend.exception.NotFound;
@@ -87,5 +89,34 @@ public class TemplateService {
 	    return templateExerciseRepository.save(te);
 	}
 
-	
-}
+	public TemplateResponseDTO getTemplateId(Integer id) {
+		Template template = templateRepository.findById(id).orElse(null);
+		if(template == null) {
+			throw new NotFound("No existe esa plantilla");
+		}
+		
+		List<TemplateExercise> templateExercises = templateExerciseRepository.findByTemplateIdWithSeries(template.getId());
+		
+		
+		
+		List<ExercisesInTemplateDTO> exercisesInTemplateDTOs = templateExercises.stream()
+				.map(te -> {
+					List<SeriesDTO> seriesDTO = te.getSeries().stream()
+							.map(s -> new SeriesDTO(s.getWeight(), s.getReps())).toList();
+					
+					return new ExercisesInTemplateDTO(te.getId(), te.getExercise().getName(), te.getExercise().getMuscleGroup(), te.getOrderIndex() ,seriesDTO);
+					}
+				).toList();
+		
+		boolean isOfficial = template.getUser() == null;
+		
+		return new TemplateResponseDTO(
+				template.getId(),
+				template.getName(),
+				isOfficial,
+				template.getCreatedAt(),
+				exercisesInTemplateDTOs
+			);
+		}
+	}
+

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.GymTrackerBackend.dto.ExercisesInTemplateDTO;
 import com.GymTrackerBackend.dto.GetTemplatesResponseDto;
 import com.GymTrackerBackend.dto.SeriesDTO;
+import com.GymTrackerBackend.dto.TemplateListDTO;
 import com.GymTrackerBackend.dto.TemplateResponseDTO;
 import com.GymTrackerBackend.dto.UserLoginRequestDTO;
 import com.GymTrackerBackend.dto.UserLoginResponseDTO;
@@ -117,27 +118,19 @@ public class UserService implements UserDetailsService{
 		return userLoginResponseDTO;
 	}
 
-	public GetTemplatesResponseDto getAllTemplatesByUserId(Authentication auth) {
-		User loggedUser = userRepository.findByUsername(auth.getName());
+	public List<TemplateListDTO> getAllTemplatesByUserId(Authentication auth) {
+	    User loggedUser = userRepository.findByUsername(auth.getName());
 	    List<Template> templates = templateRepository.findByUserId(loggedUser.getId());
-	    
-	    List<TemplateResponseDTO> templateResponseDTOs = templates.stream()
-	    		.map(t -> {
-	    	List<TemplateExercise> templateExercises = templateExerciseRepository.findByTemplateIdWithSeries(t.getId());
-	    	
-	    	List<ExercisesInTemplateDTO> exercisesInTemplateDTOs = templateExercises.stream()
-	    			.map(te -> {
-	    				List<SeriesDTO> seriesDTOs = te.getSeries().stream()
-	    						.map(s -> new SeriesDTO(s.getWeight(), s.getReps())).toList();
-	    				
-	    				return new ExercisesInTemplateDTO(te.getId(), te.getExercise().getName(), te.getExercise().getMuscleGroup(), seriesDTOs);
-	    			}).toList();
-	    	
-	    	return new TemplateResponseDTO(t.getId(), t.getName(), t.getUser() == null ? true : false, t.getCreatedAt(), exercisesInTemplateDTOs);
-	    	
-	    }).toList();
-	    return new GetTemplatesResponseDto(templateResponseDTOs);
+
+	    return templates.stream()
+	        .map(t -> new TemplateListDTO(
+	            t.getId(),
+	            t.getName(),
+	            t.getUser() == null 
+	        ))
+	        .toList();
 	}
+
 
 	
 	

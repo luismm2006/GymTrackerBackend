@@ -79,7 +79,7 @@ public class SecurityConfig {
                 // Auth
                 .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/verify").permitAll()
                 // Ejercicios públicos
-                .requestMatchers("/api/exercises").permitAll()
+                .requestMatchers("/api/exercises", "/api/routines/**").permitAll()
                 // Crear plantilla (solo si quieres que ADMIN pueda sin token)
                 .requestMatchers("/api/createTemplate").permitAll()
                 // Endpoints que requieren autenticación

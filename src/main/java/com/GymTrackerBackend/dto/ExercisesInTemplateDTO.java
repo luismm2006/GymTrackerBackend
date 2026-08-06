@@ -4,15 +4,17 @@ import java.util.List;
 
 public class ExercisesInTemplateDTO {
 
-    private Integer id;
-    private String name;
+	private Integer id;
+    private String exerciseName;
     private String muscleGroup;
+    private Integer order;
     private List<SeriesDTO> series;
-    
-    public ExercisesInTemplateDTO(Integer id, String name, String muscleGroup, List<SeriesDTO> series) {
+
+    public ExercisesInTemplateDTO(Integer id, String exerciseName, String muscleGroup, Integer order, List<SeriesDTO> series) {
         this.id = id;
-        this.name = name;
+        this.exerciseName = exerciseName;
         this.muscleGroup = muscleGroup;
+        this.order = order;
         this.series = series;
     }
 
@@ -24,12 +26,12 @@ public class ExercisesInTemplateDTO {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getExerciseName() {
+		return exerciseName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setExerciseName(String exerciseName) {
+		this.exerciseName = exerciseName;
 	}
 
 	public String getMuscleGroup() {
@@ -40,6 +42,14 @@ public class ExercisesInTemplateDTO {
 		this.muscleGroup = muscleGroup;
 	}
 
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+
 	public List<SeriesDTO> getSeries() {
 		return series;
 	}
@@ -47,6 +57,9 @@ public class ExercisesInTemplateDTO {
 	public void setSeries(List<SeriesDTO> series) {
 		this.series = series;
 	}
+    
+
+	
     
     
     

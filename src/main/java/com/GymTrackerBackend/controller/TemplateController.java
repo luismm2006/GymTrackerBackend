@@ -36,6 +36,12 @@ public class TemplateController {
         return ResponseEntity.ok(response);
     }
 
+	@GetMapping("/templates/{id}")
+	public TemplateResponseDTO getTemplateId(@PathVariable Integer id) {
+		return templateService.getTemplateId(id);
+	}
+	
+	
     @PostMapping("/{templateId}/exercises")
     public ResponseEntity<?> addExercise(
             @PathVariable Integer templateId,
