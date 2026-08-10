@@ -2,7 +2,7 @@ package com.GymTrackerBackend.service;
 
 
 import java.time.LocalDateTime;
-
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
@@ -14,6 +14,7 @@ import com.GymTrackerBackend.dto.TemplateRequestDTO;
 import com.GymTrackerBackend.dto.TemplateResponseDTO;
 import com.GymTrackerBackend.exception.NotFound;
 import com.GymTrackerBackend.model.Exercise;
+import com.GymTrackerBackend.model.Series;
 import com.GymTrackerBackend.model.Template;
 import com.GymTrackerBackend.model.TemplateExercise;
 import com.GymTrackerBackend.model.User;
@@ -97,12 +98,16 @@ public class TemplateService {
 		
 		List<TemplateExercise> templateExercises = templateExerciseRepository.findByTemplateIdWithSeries(template.getId());
 		
-		
+		templateExercises.forEach(te -> {
+	        if (te.getSeries() != null) {
+	            te.getSeries().sort(Comparator.comparing(Series::getId));
+	        }
+	    });
 		
 		List<ExercisesInTemplateDTO> exercisesInTemplateDTOs = templateExercises.stream()
 				.map(te -> {
 					List<SeriesDTO> seriesDTO = te.getSeries().stream()
-							.map(s -> new SeriesDTO(s.getWeight(), s.getReps())).toList();
+							.map(s -> new SeriesDTO(s.getId(), s.getWeight(), s.getReps())).toList();
 					
 					return new ExercisesInTemplateDTO(te.getId(), te.getExercise().getName(), te.getExercise().getMuscleGroup(), te.getOrderIndex() ,seriesDTO);
 					}

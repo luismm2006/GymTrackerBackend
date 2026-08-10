@@ -1,6 +1,7 @@
 package com.GymTrackerBackend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +43,7 @@ public class TemplateExerciseController {
 		
 		String messageOk = templateExerciseService.addSeries(templateId, templateExerciseId, dto);
 		
-		return ResponseEntity.ok(messageOk);
+		return ResponseEntity.ok(Map.of("message", messageOk));
 		
 	}
 	

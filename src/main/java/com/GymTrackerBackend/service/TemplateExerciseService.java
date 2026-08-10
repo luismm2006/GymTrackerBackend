@@ -50,7 +50,7 @@ public class TemplateExerciseService {
 		if(te == null) {
 			throw new NotFound("TemplateExercise no pertenece al Template indicado");
 		}
-		return te.getSeries().stream().map(s -> new SeriesDTO(s.getWeight(), s.getReps())).toList();
+		return te.getSeries().stream().map(s -> new SeriesDTO(s.getId(), s.getWeight(), s.getReps())).toList();
 	}
 
 	public String editSeries(Integer templateId, Integer templateExerciseId, Integer seriesId, SeriesDTO seriesDTO) {
