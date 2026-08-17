@@ -23,9 +23,13 @@ public class ExerciseController {
 
 
 	@GetMapping("/exercises")
-	public ResponseEntity<?> getAllExercises(String search, String muscleGroup){
-		return ResponseEntity.ok(exerciseService.getAllExercises(search, muscleGroup));
+	public ResponseEntity<?> getAllExercises(){
+		return ResponseEntity.ok(exerciseService.getAllExercises());
 	}
 	
+	@GetMapping("/exercises/types")
+	public ResponseEntity<?> getAllMuscleGroups(){
+		return ResponseEntity.ok(exerciseService.getAllMuscleGroups());
+	}
 	
 }

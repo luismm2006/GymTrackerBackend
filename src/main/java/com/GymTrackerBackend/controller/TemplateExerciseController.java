@@ -52,7 +52,7 @@ public class TemplateExerciseController {
 		
 		String messageOk = templateExerciseService.editSeries(templateId, templateExerciseId, seriesId, seriesDTO);
 		
-		return ResponseEntity.ok(messageOk);
+		return ResponseEntity.ok(Map.of("message", messageOk));
 		
 	}
 	
@@ -61,7 +61,7 @@ public class TemplateExerciseController {
 		
 		String messageOk = templateExerciseService.deleteSeries(templateId, templateExerciseId, seriesId);
 		
-		return ResponseEntity.ok(messageOk);
+		return ResponseEntity.ok(Map.of("message", messageOk));
 		
 	}
 }

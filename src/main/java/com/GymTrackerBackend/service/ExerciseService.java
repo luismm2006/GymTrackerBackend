@@ -3,9 +3,11 @@ package com.GymTrackerBackend.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.GymTrackerBackend.dto.ExerciseResponseDTO;
+import com.GymTrackerBackend.dto.ExercisesTypesResponseDTO;
 import com.GymTrackerBackend.model.Exercise;
 import com.GymTrackerBackend.repository.ExerciseRepository;
 
@@ -23,10 +25,10 @@ public class ExerciseService {
 
 
 
-	public List<ExerciseResponseDTO> getAllExercises(String search, String muscleGroup) {
+	public List<ExerciseResponseDTO> getAllExercises() {
 	    List<Exercise> exercisesList;
 	    
-		if (search != null && muscleGroup != null) {
+		/*if (search != null && muscleGroup != null) {
 			exercisesList = exerciseRepository
 	                .findByNameContainingIgnoreCaseAndMuscleGroupIgnoreCase(search, muscleGroup);
 	    }
@@ -38,9 +40,9 @@ public class ExerciseService {
 		else if (muscleGroup != null) {
 	    	exercisesList = exerciseRepository.findByMuscleGroupIgnoreCase(muscleGroup);
 	    }
-	    else {
+	    else {*/
 	    	exercisesList = exerciseRepository.findAll();	    	
-	    }
+	    /*}*/
 		
 		List<ExerciseResponseDTO> exercises = new ArrayList<ExerciseResponseDTO>();
 		
@@ -54,6 +56,12 @@ public class ExerciseService {
 		}
 		
 		return exercises;
+	}
+
+
+
+	public List<String> getAllMuscleGroups() {
+	    return exerciseRepository.findDistinctMuscleGroups();
 	}
 
 }
