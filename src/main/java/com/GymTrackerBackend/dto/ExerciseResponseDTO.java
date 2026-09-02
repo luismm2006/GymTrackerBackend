@@ -8,17 +8,19 @@ public class ExerciseResponseDTO {
 	
 	private String muscleGroup;
 
-	
+	private String urlImage;
+
 	
 	public ExerciseResponseDTO() {
 		super();
 	}
 
-	public ExerciseResponseDTO(Integer id, String name, String muscleGroup) {
+	public ExerciseResponseDTO(Integer id, String name, String muscleGroup, String urlImage) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.muscleGroup = muscleGroup;
+		this.urlImage = urlImage;
 	}
 
 	public Integer getId() {
@@ -43,6 +45,14 @@ public class ExerciseResponseDTO {
 
 	public void setMuscleGroup(String muscleGroup) {
 		this.muscleGroup = muscleGroup;
+	}
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 	
 	

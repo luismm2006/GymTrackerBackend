@@ -109,7 +109,7 @@ public class TemplateService {
 					List<SeriesDTO> seriesDTO = te.getSeries().stream()
 							.map(s -> new SeriesDTO(s.getId(), s.getWeight(), s.getReps())).toList();
 					
-					return new ExercisesInTemplateDTO(te.getId(), te.getExercise().getName(), te.getExercise().getMuscleGroup(), te.getOrderIndex() ,seriesDTO);
+					return new ExercisesInTemplateDTO(te.getId(), te.getExercise().getName(), te.getExercise().getMuscleGroup(), te.getExercise().getUrlImage(), te.getOrderIndex() ,seriesDTO);
 					}
 				).toList();
 		

@@ -7,15 +7,17 @@ public class ExercisesInTemplateDTO {
 	private Integer id;
     private String exerciseName;
     private String muscleGroup;
+    private String urlImage;
     private Integer order;
     private List<SeriesDTO> series;
 
-    public ExercisesInTemplateDTO(Integer id, String exerciseName, String muscleGroup, Integer order, List<SeriesDTO> series) {
+    public ExercisesInTemplateDTO(Integer id, String exerciseName, String muscleGroup, String urlImage, Integer order, List<SeriesDTO> series) {
         this.id = id;
         this.exerciseName = exerciseName;
         this.muscleGroup = muscleGroup;
         this.order = order;
         this.series = series;
+        this.urlImage = urlImage;
     }
 
 	public Integer getId() {
@@ -56,6 +58,14 @@ public class ExercisesInTemplateDTO {
 
 	public void setSeries(List<SeriesDTO> series) {
 		this.series = series;
+	}
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
     
 

@@ -26,7 +26,10 @@ public class Exercise {
 	
 	@Column(name = "created_by")
 	private Integer createdBy;
-
+	
+	@Column(name = "url_image")
+	private String urlImage;
+	
 	@Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -81,6 +84,14 @@ public class Exercise {
 
 	public void setTemplateExercises(List<TemplateExercise> templateExercises) {
 		this.templateExercises = templateExercises;
+	}
+	
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 
 	@Override

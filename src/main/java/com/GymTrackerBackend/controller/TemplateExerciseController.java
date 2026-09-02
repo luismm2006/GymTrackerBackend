@@ -64,4 +64,14 @@ public class TemplateExerciseController {
 		return ResponseEntity.ok(Map.of("message", messageOk));
 		
 	}
+	
+	
+	@DeleteMapping("/templates/{templateId}/exercises/{templateExerciseId}")
+	public ResponseEntity<?> deleteExercise(@PathVariable Integer templateId, @PathVariable Integer templateExerciseId){
+		
+		String messageOk = templateExerciseService.deleteExercise(templateId, templateExerciseId);
+		
+		return ResponseEntity.ok(Map.of("message", messageOk));
+		
+	}
 }

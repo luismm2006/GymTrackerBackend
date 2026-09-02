@@ -87,6 +87,16 @@ public class TemplateExerciseService {
 		seriesRepository.delete(series);
 		return "Serie eliminada correctamente";
 	}
+
+	public String deleteExercise(Integer templateId, Integer templateExerciseId) {
+		
+		TemplateExercise te = templateExerciseRepository.findByIdAndTemplateId(templateExerciseId, templateId);
+		if(te == null) {
+			throw new NotFound("TemplateExercise no pertenece al Template indicado");
+		}
+		templateExerciseRepository.delete(te);
+		return "Ejercicio: " + te.getExercise().getName() + " eliminado correctamente";
+	}
 	
 	
 	
