@@ -51,7 +51,7 @@ public class ExerciseService {
 			exerciseResponseDTO.setId(exercise.getId());
 			exerciseResponseDTO.setName(exercise.getName());
 			exerciseResponseDTO.setMuscleGroup(exercise.getMuscleGroup());
-			
+			exerciseResponseDTO.setUrlImage(exercise.getUrlImage());
 			exercises.add(exerciseResponseDTO);
 		}
 		
